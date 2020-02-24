@@ -14,7 +14,8 @@ vi.	Find-max: O(n)
 
 Question 1c (written section)
 
-i.	“Just to clarify you want us to make a binary search tree that implements all the given methods recursively, is it also safe to assume that each node will have positive integer values?, Lastly is it safe to assume that we can use any number of parameters for each method?”
+i.	“Just to clarify you want us to make a binary search tree that implements all the given methods recursively, is it also safe to assume that each node will have positive integer values?
+   Lastly is it safe to assume that we can use any number of parameters for each method?”
 ii.	“for findNextRec() if there does not exist a number that is bigger than the given node, do we return null or the same number? This goes the same for findPrevRec()”
 iii.	InsertRec(1) ->   1 		insertRec(2) ->   1		etc…	 1
                        /     \		               /     \                /     \
@@ -34,4 +35,6 @@ Question 2a (written section)
 
 Note: BST values weren’t altered, leading zeros were left out so it can be easier to read
 Question 2b (written section)
-One method of outputting a sorted list is by traversing the tree inorder = (leftchild, root, rightchild). Since we know every child to the left of the root is less than the given root and same goes for the right of the root. We can print traverse to the left most of the tree and print out the values in that order
+One method of outputting a sorted list is by traversing the tree inorder = (leftchild, root, rightchild).
+Since we know every child to the left of the root is less than the given root and same goes for the right of the root. 
+We can print traverse to the left most of the tree and print out the values in that order
