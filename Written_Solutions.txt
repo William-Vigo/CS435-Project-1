@@ -17,14 +17,14 @@ Question 1c (written section)
 i.	“Just to clarify you want us to make a binary search tree that implements all the given methods recursively, is it also safe to assume that each node will have positive integer values?, Lastly is it safe to assume that we can use any number of parameters for each method?”
 ii.	“for findNextRec() if there does not exist a number that is bigger than the given node, do we return null or the same number? This goes the same for findPrevRec()”
 iii.	InsertRec(1) ->   1 		insertRec(2) ->   1		etc…	 1
-                       /     \		               /     \        /     \
-                    null     null                null     2      0       2	
+                       /     \		               /     \                /     \
+                    null     null                    null     2              0       2	
 
 findNextRec(1) ->2  findPrevRec(1) -> 0    findMinRec(tree) -> 0   findMaxRec(tree) -> 2
 
 deleteRec(0) ->   1 
-		       /     \
-             null	  2
+	       /     \
+             null     2
 
 iv.	Some issues that I do have on space is the implicit space with recursion. All of these algorithms can be done iteratively and not use that extra space
 v.	Some tradeoffs that we have with the recursive solutions are that they are easier to implement but the implicit space complexity grows rather than not having this problem with iteratively solution.
