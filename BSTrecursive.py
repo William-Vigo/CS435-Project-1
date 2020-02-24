@@ -3,23 +3,30 @@ class Node:
     def __init__(self, value):
         self.left = None
         self.right = None
+        self.parent = None
         self.value = value
 
 class BST:
 
-    def __init__(self,value):
-        self.root = Node(value)
+    def __init__(self):
+        self.root = None
 
     def insertRec(self, value):
+        if(self.root == None):
+            self.root = Node(value)
         self.__insertHelp(self.root, value)
 
     def __insertHelp(self, node: Node, value):
         if(node == None):
             node = Node(value)
         elif(value > node.value):
-            node.right = self.__insertHelp(node.right, value)
+            rightChild = self.__insertHelp(node.right, value)
+            node.right = rightChild
+            rightChild.parent = node
         elif(value < node.value):
-            node.left = self.__insertHelp(node.left,value)
+            leftChild = self.__insertHelp(node.left,value)
+            node.left = leftChild
+            leftChild.parent = node
         return node
 
     def deleteRec(self,value):
@@ -51,42 +58,44 @@ class BST:
 
         return node
     
-    def findNextRec(self, node: Node, value, greatest):
+    def findNextRec(self, node: Node, value):
         if(node == None):
             return node
         if(value > node.value):
-            return self.findNextRec(node.right, value, node.value)
+            return self.findNextRec(node.right, value)
         elif(value < node.value):
-            greatest = node.value
-            return self.findNextRec(node.left, value, greatest)
+            return self.findNextRec(node.left, value)
         else:
-            if(node.right == None):
-                if(node.value > greatest):
-                    return None
-                else:
-                    return greatest
-            else:
+            #case 1: target has right sub tree, find min in the subtree
+            if(node.right != None):
                 return self.findMinRec(node.right, node.right.value)
+            #case 2: target has no parents ex: bst = [9,8,7,6] -> 9 has no parent
+            while(node.parent):
+                #check if current node is left most node from parent, loop until we are left most
+                if(node.parent.left == node):
+                    return node.parent.value
+                node = node.parent
+            return None
 
-
-
-    def findPrevRec(self, node: Node, value, smallest):
+    def findPrevRec(self, node: Node, value):
         if(node == None):
             return node
         if(value > node.value):
-            smallest = node.value
-            return self.findPrevRec(node.right, value, smallest)
+            return self.findPrevRec(node.right, value)
         elif(value < node.value):
-            return self.findPrevRec(node.left, value, node.value)
+            return self.findPrevRec(node.left, value)
         else:
-            if(node.left == None):
-                
-                if(node.value < smallest):
-                    return None
-                else:
-                    return smallest
-            else:
-                return self.findMaxRec(node.left, node.left.value)
+            #case 1: target has left sub tree
+            if(node.left != None):
+                return self.findMaxRec(node.left,node.left.value)
+            #case 2: target has no parents ex: bst = [1,2,3,4,5] -> 1 has no parent
+            while(node.parent):
+                #check if current node is right most node from parent, loop until we are right most
+                if(node.parent.right == node):
+                    return node.parent.value
+                node = node.parent
+            return None
+            
 
 
     def findMinRec(self, node: Node, min):
@@ -101,8 +110,8 @@ class BST:
         max = node.value
         return self.findMaxRec(node.right, max)
 
-tree = BST(10)
-valuesToAdd = [5, 15, 4, 13, 18, 12, 14, 16, 19]
+tree = BST()
+valuesToAdd = [10, 5, 15, 4, 13, 18, 12, 14, 16, 19]
 #insertRec
 for i in valuesToAdd:
     tree.insertRec(i)
@@ -136,12 +145,11 @@ print(tree.findMinRec(tree.root, tree.root.value)) #4
 print(tree.findMaxRec(tree.root, tree.root.value)) #19
 
 #findNextRec
-print(tree.findNextRec(tree.root, 12, tree.root.value)) #13
+print(tree.findNextRec(tree.root, 10)) #13
 
 #findPrevRec
-print(tree.findPrevRec(tree.root, 5, tree.root.value)) #4
-        
+print(tree.findPrevRec(tree.root, 12)) #4
+
 
         
-
 
