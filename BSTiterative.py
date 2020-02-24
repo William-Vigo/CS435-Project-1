@@ -26,10 +26,11 @@ class BST:
             
     def delete(self,value):
         root = self.root
+        duplicateExist = False
         while(root != None): 
             if(value < root.value):
                 root = root.left
-            elif(value > root.right):
+            elif(value > root.value):
                 root = root.right 
             else:
                 #node found is a leaf
@@ -40,8 +41,21 @@ class BST:
                     root = root.right
                 elif(root.right == None):
                     root = root.left
+
                 else:
-                    pass
+                    duplicateExist = True
+                    min = self.findMinIter(root.right)
+                    root.value = min
+                    root = root.right
+                break
+
+        if(duplicateExist):
+            duplicate = root.value
+            while(root != None):
+                if(duplicate < root.value):
+                    root = root.left
+                else:
+                    root = None
 
     def findMinIter(self, node: Node):
         smallest = node.value
@@ -67,4 +81,8 @@ print(tree.root.left.value)
 print(tree.root.value)
 
 print(tree.findMinIter(tree.root))
+print(tree.findMaxIter(tree.root))
+
+tree.delete(4)
+print(tree.root.right.value)
 
