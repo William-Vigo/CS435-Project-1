@@ -79,7 +79,23 @@ class BST:
                         return node.parent.value
                     node = node.parent
                 return None
-
+    def findPrevIter(self, node: Node, value):
+        while(node != None): 
+            if(value < node.value):
+                node = node.left
+            elif(value > node.value):
+                node = node.right 
+            else:
+                #case 1: target has right sub tree, find min in the subtree
+                if(node.left != None):
+                    return self.findMaxIter(node.left)
+                #case 2: target has no parents ex: bst = [1,2,3,4,5] -> 1 has no parent
+                while(node.parent):
+                    #check if current node is right most node from parent, loop until we are right most
+                    if(node.parent.right == node):
+                        return node.parent.value
+                    node = node.parent
+                return node
     def findMinIter(self, node: Node):
         smallest = node.value
         while(node != None):
@@ -96,17 +112,41 @@ class BST:
     
 
 tree = BST()
-values = [10, 5, 15, 4, 13, 18, 12, 14, 16, 19]
-for i in values:
-    tree.insert(i)
+valuesToAdd = [10, 5, 15, 4, 13, 18, 12, 14, 16, 19]
+#insertRec
+for i in valuesToAdd:
+    tree.insertRec(i)
+#
+"""
+                       10
+                   /        \
+                 5           15
+                /         /      \  
+              4         13        18
+                      /    \     /   \
+                    12     14   16    19
+"""
+#deleteRec
+print(tree.root.right.value) #15
+tree.deleteRec(15)
+print(tree.root.right.value) #16
+"""
+                       10
+                   /        \
+                 5           16
+                /         /     \  
+              4         13       18
+                      /    \       \
+                    12      14      19
+"""
+#findMinRec
+print(tree.findMinRec(tree.root, tree.root.value)) #4
 
-print(tree.root.left.value)
-print(tree.root.value)
+#findMaxRec
+print(tree.findMaxRec(tree.root, tree.root.value)) #19
 
-print(tree.findMinIter(tree.root))
-print(tree.findMaxIter(tree.root))
+#findNextRec
+print(tree.findNextRec(tree.root, 12)) #13
 
-tree.delete(15)
-print(tree.root.right.value)
-
-print(tree.findNextIter(tree.root, 19))
+#findPrevRec
+print(tree.findPrevRec(tree.root, 12)) #4
