@@ -101,14 +101,45 @@ class BST:
         max = node.value
         return self.findMaxRec(node.right, max)
 
-tree = BST(2)
-tree.insertRec(4)
-tree.insertRec(0)
-tree.insertRec(5)
-tree.insertRec(3)
+tree = BST(10)
+valuesToAdd = [5, 15, 4, 13, 18, 12, 14, 16, 19]
+#insertRec
+for i in valuesToAdd:
+    tree.insertRec(i)
+#
+"""
+                       10
+                   /        \
+                 5           15
+                /         /      \  
+              4         13        18
+                      /    \     /   \
+                    12     14   16    19
+"""
+#deleteRec
+print(tree.root.right.value) #15
+tree.deleteRec(15)
+print(tree.root.right.value) #16
+"""
+                       10
+                   /        \
+                 5           16
+                /         /     \  
+              4         13       18
+                      /    \       \
+                    12      14      19
+"""
+#findMinRec
+print(tree.findMinRec(tree.root, tree.root.value)) #4
 
-print(tree.findPrevRec(tree.root, 0, tree.root.value))
+#findMaxRec
+print(tree.findMaxRec(tree.root, tree.root.value)) #19
 
+#findNextRec
+print(tree.findNextRec(tree.root, 12, tree.root.value)) #13
+
+#findPrevRec
+print(tree.findPrevRec(tree.root, 5, tree.root.value)) #4
         
 
         
