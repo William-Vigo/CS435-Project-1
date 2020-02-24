@@ -9,7 +9,7 @@ class BST:
     def __init__(self):
         self.root = None
 
-    def insert(self,value):
+    def insertIter(self,value):
         root = self.root
         current = None
         while(root != None): 
@@ -29,7 +29,7 @@ class BST:
             current.right = rightChild
             rightChild.parent = current
             
-    def delete(self,value):
+    def deleteIter(self,value):
         root = self.root
         duplicateExist = False
         while(root != None): 
@@ -113,10 +113,10 @@ class BST:
 
 tree = BST()
 valuesToAdd = [10, 5, 15, 4, 13, 18, 12, 14, 16, 19]
-#insertRec
+#insertIter
 for i in valuesToAdd:
-    tree.insertRec(i)
-#
+    tree.insertIter(i)
+
 """
                        10
                    /        \
@@ -126,9 +126,9 @@ for i in valuesToAdd:
                       /    \     /   \
                     12     14   16    19
 """
-#deleteRec
+#deleteIter
 print(tree.root.right.value) #15
-tree.deleteRec(15)
+tree.deleteIter(15)
 print(tree.root.right.value) #16
 """
                        10
@@ -139,14 +139,14 @@ print(tree.root.right.value) #16
                       /    \       \
                     12      14      19
 """
-#findMinRec
-print(tree.findMinRec(tree.root, tree.root.value)) #4
+#findMinIter
+print(tree.findMinIter(tree.root)) #4
 
-#findMaxRec
-print(tree.findMaxRec(tree.root, tree.root.value)) #19
+#findMaxIter
+print(tree.findMaxIter(tree.root)) #19
 
-#findNextRec
-print(tree.findNextRec(tree.root, 12)) #13
+#findNextIter
+print(tree.findNextIter(tree.root, 12)) #13
 
-#findPrevRec
-print(tree.findPrevRec(tree.root, 12)) #4
+#findPrevIter
+print(tree.findPrevIter(tree.root, 12)) #4
