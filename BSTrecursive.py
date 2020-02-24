@@ -145,7 +145,7 @@ print(tree.findMinRec(tree.root, tree.root.value)) #4
 print(tree.findMaxRec(tree.root, tree.root.value)) #19
 
 #findNextRec
-print(tree.findNextRec(tree.root, 10)) #13
+print(tree.findNextRec(tree.root, 12)) #13
 
 #findPrevRec
 print(tree.findPrevRec(tree.root, 12)) #4
