@@ -11,9 +11,12 @@ def getRandomArray(n):
 def getSortedArray(n):
     sorted = []
     for i in range(n, 0, -1):
-
+        sorted.append(i)
+    return sorted
 
 #Problem 3a
 print(getRandomArray(10))
 
+#Problem 3b
+print(getSortedArray(10))
 
