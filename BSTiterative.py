@@ -1,5 +1,6 @@
 class Node:
     def __init__(self,value):
+        self.parent = None
         self.left = None
         self.right = None
         self.value = value
@@ -20,9 +21,13 @@ class BST:
         if(current == None):
             self.root = Node(value)
         elif(value < current.value):
-            current.left = Node(value)
+            leftChild = Node(value)
+            current.left = leftChild
+            leftChild.parent = current
         else:
-            current.right = Node(value)
+            rightChild = Node(value)
+            current.right = rightChild
+            rightChild.parent = current
             
     def delete(self,value):
         root = self.root
@@ -56,6 +61,24 @@ class BST:
                     root = root.left
                 else:
                     root = None
+                    
+    def findNextIter(self, node: Node, value):
+        while(node != None): 
+            if(value < node.value):
+                node = node.left
+            elif(value > node.value):
+                node = node.right 
+            else:
+                #case 1: target has right sub tree, find min in the subtree
+                if(node.right != None):
+                    return self.findMinIter(node.right)
+                #case 2: target has no parents ex: bst = [9,8,7,6] -> 9 has no parent
+                while(node.parent):
+                    #check if current node is left most node from parent, loop until we are left most
+                    if(node.parent.left == node):
+                        return node.parent.value
+                    node = node.parent
+                return None
 
     def findMinIter(self, node: Node):
         smallest = node.value
@@ -83,6 +106,7 @@ print(tree.root.value)
 print(tree.findMinIter(tree.root))
 print(tree.findMaxIter(tree.root))
 
-tree.delete(4)
+tree.delete(15)
 print(tree.root.right.value)
 
+print(tree.findNextIter(tree.root, 19))
