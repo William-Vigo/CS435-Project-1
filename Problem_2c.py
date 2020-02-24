@@ -29,9 +29,26 @@ class BST:
             current.right = rightChild
             rightChild.parent = current
 
+    def sort(self):
+        node = self.root
+        sortedList = []
+        stack = []
+        while(True):
+            if(node != None):
+                stack.append(node)
+                node = node.left
+                
+            elif(stack):
+                node = stack.pop()
+                sortedList.append(node.value)
+                node = node.right
+            else:
+                break
+        return sortedList
+
 tree = BST()
 values = [10,5,20,6,12,7,11,16,19,18,17]
 for i in values:
     tree.insertIter(i)
 
-print(tree.root.right.value)
+print(tree.sort())
