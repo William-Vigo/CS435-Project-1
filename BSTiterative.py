@@ -149,4 +149,4 @@ print(tree.findMaxIter(tree.root)) #19
 print(tree.findNextIter(tree.root, 12)) #13
 
 #findPrevIter
-print(tree.findPrevIter(tree.root, 12)) #4
+print(tree.findPrevIter(tree.root, 12)) #10
