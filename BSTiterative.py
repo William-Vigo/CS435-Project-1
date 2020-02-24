@@ -49,6 +49,13 @@ class BST:
             smallest = node.value
             node = node.left
         return smallest
+
+    def findMaxIter(self, node: Node):
+        max = node.value
+        while(node != None):
+            max = node.value
+            node = node.right
+        return max
     
 
 tree = BST()
