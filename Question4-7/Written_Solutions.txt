@@ -6,7 +6,7 @@ Question 4a (written section)
 •	Left subtree of each nodes is less than the node values
 •	Right subtree of each node is greater than the node values
 
-Question 1b (written section)
+Question 4b (written section)
     n = height of the tree
 i.	Insert: O(logn)
 ii.	Delete: O(logn)
