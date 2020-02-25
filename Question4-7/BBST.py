@@ -28,8 +28,12 @@ class BST:
                 if(curr.right):
                     queue.append(curr.right)
                 numNodes -= 1
+
     def getBalanceFactor(self, node: Node):
-        pass
+        leftNode = self.getHeight(node.left)
+        rightNode = self.getHeight(node.right)
+        return leftNode - rightNode
+        
     def insertIter(self,value):
         root = self.root
         current = None
@@ -133,8 +137,10 @@ class BST:
     
 
 tree = BST()
-tree.insertIter(1)
-tree.insertIter(2)
+tree.insertIter(5)
 tree.insertIter(0)
-
+tree.insertIter(10)
+tree.insertIter(15)
+tree.insertIter(12)
 print(tree.getHeight(tree.root))
+print(tree.getBalanceFactor(tree.root))
