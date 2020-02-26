@@ -1,5 +1,6 @@
 class Node:
     def __init__(self,value):
+        self.height = 1
         self.parent = None
         self.left = None
         self.right = None
@@ -30,6 +31,8 @@ class BST:
                 numNodes -= 1
 
     def getBalanceFactor(self, node: Node):
+        if(not node):
+            return 0
         leftNode = self.getHeight(node.left)
         rightNode = self.getHeight(node.right)
         return leftNode - rightNode
@@ -40,20 +43,27 @@ class BST:
         while(root != None): 
             current = root             
             if(value < root.value):
+                root.height += 1
                 root = root.left
+                
             elif(value > root.value):
+                root.height += 1
                 root = root.right
+                
         if(current == None):
             self.root = Node(value)
+            return
         elif(value < current.value):
             leftChild = Node(value)
             current.left = leftChild
             leftChild.parent = current
+            current = current.left
         else:
             rightChild = Node(value)
             current.right = rightChild
             rightChild.parent = current
-       
+            current = current.right
+
     def deleteIter(self,value):
         root = self.root
         duplicateExist = False
@@ -135,12 +145,17 @@ class BST:
             node = node.right
         return max
     
+    def inorder(self, node: Node):
+        if(node == None):
+            return
+        self.inorder(node.left)
+        print(node.value)
+        self.inorder(node.right)
 
 tree = BST()
-tree.insertIter(5)
-tree.insertIter(0)
-tree.insertIter(10)
-tree.insertIter(15)
-tree.insertIter(12)
-print(tree.getHeight(tree.root))
-print(tree.getBalanceFactor(tree.root))
+values = [9,8,7,6,5,4,3,2,1]
+for i in values:
+    tree.insertIter(i)
+
+print(tree.inorder(tree.root))
+print(tree.root.left.height)
