@@ -10,33 +10,74 @@ class Node:
 class BST:
     def __init__(self):
         self.root = None
+
     def getHeight(self, node: Node):
         if(node == None):
             return 0
-        queue = []
-        queue.append(node)
-        height = 0
+        return node.height
+    def rightRotate(self, node: Node):
+        leftNode = node.left
+        node.left = leftNode.right
+        
+        if(leftNode.right):
+            leftNode.right.parent = node.left.parent
+        if(node.parent):
+            leftNode.parent = node.parent
+            leftNode.parent.left = leftNode
+        else:
+            leftNode.parent = None
+            self.root = leftNode
+        node.parent = leftNode
 
-        while(True):
-            numNodes = len(queue)
-            if(numNodes == 0):
-                return height
-            height += 1
-            while(numNodes > 0):
-                curr = queue.pop(0)
-                if(curr.left):
-                    queue.append(curr.left)
-                if(curr.right):
-                    queue.append(curr.right)
-                numNodes -= 1
+        leftNode.right = node
+
+        node.height = 1 + max(self.getHeight(node.left),self.getHeight(node.right))
+        leftNode.height = 1 + max(self.getHeight(leftNode.left),self.getHeight(leftNode.right))
+
+    def leftRotate(self, node: Node):
+        rightNode = node.right
+        node.right = rightNode.left
+        
+        if(rightNode.left):
+            rightNode.left.parent = node.right.parent
+        if(node.parent):
+            rightNode.parent = node.parent
+            rightNode.parent.right = rightNode
+        else:
+            rightNode.parent = None
+            self.root = rightNode
+        node.parent = rightNode
+
+        rightNode.left = node
+
+        node.height = 1 + max(self.getHeight(node.left),self.getHeight(node.right))
+        rightNode.height = 1 + max(self.getHeight(rightNode.left),self.getHeight(rightNode.right))
+
 
     def getBalanceFactor(self, node: Node):
         if(not node):
             return 0
-        leftNode = self.getHeight(node.left)
-        rightNode = self.getHeight(node.right)
-        return leftNode - rightNode
         
+        return self.getHeight(node.left) - self.getHeight(node.right)
+        
+    def balance(self, node: Node):
+        curr = node
+        while(curr):
+            BF = self.getBalanceFactor(curr)
+
+            curr.height = 1 + max(self.getHeight(curr.left), self.getHeight(curr.right))
+
+            if(abs(BF) <= 1):
+                curr = curr.parent
+                continue
+            #left rotation
+            if(BF > 0 and node.value < curr.left.value):
+                self.rightRotate(curr)
+                
+            #right rotation
+            if(BF < 0 and node.value > curr.right.value):
+                self.leftRotate(curr)
+                
     def insertIter(self,value):
         root = self.root
         current = None
@@ -63,6 +104,7 @@ class BST:
             current.right = rightChild
             rightChild.parent = current
             current = current.right
+        self.balance(current)
 
     def deleteIter(self,value):
         root = self.root
@@ -153,9 +195,10 @@ class BST:
         self.inorder(node.right)
 
 tree = BST()
-values = [9,8,7,6,5,4,3,2,1]
+values = [1,2,3]
 for i in values:
     tree.insertIter(i)
 
-print(tree.inorder(tree.root))
-print(tree.root.left.height)
+print(tree.root.left.value)
+print(tree.root.value)
+print(tree.root.right.value)
