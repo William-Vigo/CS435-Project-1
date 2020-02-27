@@ -288,6 +288,7 @@ class BBST:
         self.inorder(node.left)
         print(node.value)
         self.inorder(node.right)
+        
 if __name__ == "__main__": 
     tree = BBST()
     values = [10,5,15,4,8,11,18,1,6,9,19,7]
