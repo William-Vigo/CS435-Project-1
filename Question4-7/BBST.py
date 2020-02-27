@@ -23,8 +23,12 @@ class BST:
         leftNode = node.left
         
         if(parent):
-            parent.left = leftNode
-            leftNode.parent = parent
+            if(parent.left):
+                parent.left = leftNode
+                leftNode.parent = parent
+            else:
+                parent.right = leftNode
+                leftNode.parent = parent
         else:
             self.root = leftNode
             leftNode.parent = None
@@ -45,8 +49,12 @@ class BST:
         rightNode = node.right
         
         if(parent):
-            parent.right = rightNode
-            rightNode.parent = parent
+            if(parent.right):
+                parent.right = rightNode
+                rightNode.parent = parent
+            else:
+                parent.left = rightNode
+                rightNode.parent = parent
         else:
             self.root = rightNode
             rightNode.parent = None
@@ -216,10 +224,9 @@ class BST:
         self.inorder(node.right)
 
 tree = BST()
-values = [0,1,2,3,4,5]
+values = [6,4,3,1,0,-1,1.5,1.25]
 for i in values:
     tree.insertIter(i)
-print(tree.root.left.value)
-print(tree.root.left.right.value)
-print(tree.root.value)
-print(tree.root.right.value)
+
+tree.inorder(tree.root)
+print("root: " + str(tree.root.value))
