@@ -16,20 +16,23 @@ class BST:
             return 0
         return node.height
     def rightRotate(self, node: Node):
-        leftNode = node.left
-        node.left = leftNode.right
-        
-        if(leftNode.right):
-            leftNode.right.parent = node.left.parent
         if(node.parent):
-            leftNode.parent = node.parent
-            leftNode.parent.left = leftNode
+            parent = node.parent
         else:
-            leftNode.parent = None
+            parent = None
+        leftNode = node.left
+        
+        if(parent):
+            parent.left = leftNode
+            leftNode.parent = parent
+        else:
             self.root = leftNode
+            leftNode.parent = None
+        node.left = leftNode.right
+        if(leftNode.right):
+            leftNode.right.parent = node
         node.parent = leftNode
-
-        leftNode.right = node
+        leftNode.right = node    
 
         node.height = 1 + max(self.getHeight(node.left),self.getHeight(node.right))
         leftNode.height = 1 + max(self.getHeight(leftNode.left),self.getHeight(leftNode.right))
@@ -37,18 +40,16 @@ class BST:
     def leftRotate(self, node: Node):
         rightNode = node.right
         node.right = rightNode.left
-        
         if(rightNode.left):
-            rightNode.left.parent = node.right.parent
+            rightNode.left.parent = node
         if(node.parent):
+            node.parent = rightNode
             rightNode.parent = node.parent
-            rightNode.parent.right = rightNode
         else:
-            rightNode.parent = None
+            node.parent = rightNode
             self.root = rightNode
-        node.parent = rightNode
-
-        rightNode.left = node
+            rightNode.parent = None
+        rightNode.left = node  
 
         node.height = 1 + max(self.getHeight(node.left),self.getHeight(node.right))
         rightNode.height = 1 + max(self.getHeight(rightNode.left),self.getHeight(rightNode.right))
@@ -73,11 +74,26 @@ class BST:
             #left rotation
             if(BF > 0 and node.value < curr.left.value):
                 self.rightRotate(curr)
+                continue
                 
             #right rotation
-            if(BF < 0 and node.value > curr.right.value):
+            elif(BF < 0 and node.value > curr.right.value):
                 self.leftRotate(curr)
-                
+                continue
+
+            #left right rotation
+            elif(BF > 0 and node.value > curr.left.value):
+                self.leftRotate(curr.left)
+                self.rightRotate(curr)
+
+            #right left rotation
+            
+            elif(BF < 0 and node.value < curr.right.value):
+                self.rightRotate(curr.right)
+                self.leftRotate(curr)
+                continue
+            
+
     def insertIter(self,value):
         root = self.root
         current = None
@@ -195,10 +211,13 @@ class BST:
         self.inorder(node.right)
 
 tree = BST()
-values = [1,2,3]
+values = [5,4,3,2,1,0]
 for i in values:
     tree.insertIter(i)
 
+print(tree.root.left.left.value)
 print(tree.root.left.value)
 print(tree.root.value)
+print(tree.root.right.left.value)
 print(tree.root.right.value)
+print(tree.root.right.right.value)
