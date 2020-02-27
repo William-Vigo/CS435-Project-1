@@ -15,3 +15,9 @@ iv.	Find-prev: O(logn)
 v.	Find-min: O(logn)
 vi.	Find-max: O(logn)
 
+Question 5b (written section)
+•	I didn't run into problem's but some that my arise is that the recursive call/stack
+    might get too large when finding the right place to insert a value which will take a
+    long time insert an item. We are also using extra implicit space which isn't good if we
+    use this in industry with huge amount of nodes.
+
