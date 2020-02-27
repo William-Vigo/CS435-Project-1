@@ -38,17 +38,22 @@ class BST:
         leftNode.height = 1 + max(self.getHeight(leftNode.left),self.getHeight(leftNode.right))
 
     def leftRotate(self, node: Node):
+        if(node.parent):
+            parent = node.parent
+        else:
+            parent = None
         rightNode = node.right
+        
+        if(parent):
+            parent.right = rightNode
+            rightNode.parent = parent
+        else:
+            self.root = rightNode
+            rightNode.parent = None
         node.right = rightNode.left
         if(rightNode.left):
             rightNode.left.parent = node
-        if(node.parent):
-            node.parent = rightNode
-            rightNode.parent = node.parent
-        else:
-            node.parent = rightNode
-            self.root = rightNode
-            rightNode.parent = None
+        node.parent = rightNode
         rightNode.left = node  
 
         node.height = 1 + max(self.getHeight(node.left),self.getHeight(node.right))
@@ -211,13 +216,10 @@ class BST:
         self.inorder(node.right)
 
 tree = BST()
-values = [5,4,3,2,1,0]
+values = [0,1,2,3,4,5]
 for i in values:
     tree.insertIter(i)
-
-print(tree.root.left.left.value)
 print(tree.root.left.value)
+print(tree.root.left.right.value)
 print(tree.root.value)
-print(tree.root.right.left.value)
 print(tree.root.right.value)
-print(tree.root.right.right.value)
