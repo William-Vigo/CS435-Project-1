@@ -14,9 +14,10 @@ def getSortedArray(n):
         sorted.append(i)
     return sorted
 
-#Problem 3a
-print(getRandomArray(10))
+if __name__ == "__main__":
+    #Problem 3a
+    print(getRandomArray(10))
 
-#Problem 3b
-print(getSortedArray(10))
+    #Problem 3b
+    print(getSortedArray(10))
 

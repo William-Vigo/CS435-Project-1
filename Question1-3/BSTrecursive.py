@@ -110,46 +110,47 @@ class BST:
         max = node.value
         return self.findMaxRec(node.right, max)
 
-tree = BST()
-valuesToAdd = [10, 5, 15, 4, 13, 18, 12, 14, 16, 19]
-#insertRec
-for i in valuesToAdd:
-    tree.insertRec(i)
-#
-"""
-                       10
-                   /        \
-                 5           15
-                /         /      \  
-              4         13        18
-                      /    \     /   \
-                    12     14   16    19
-"""
-#deleteRec
-print(tree.root.right.value) #15
-tree.deleteRec(15)
-print(tree.root.right.value) #16
-"""
-                       10
-                   /        \
-                 5           16
-                /         /     \  
-              4         13       18
-                      /    \       \
-                    12      14      19
-"""
-#findMinRec
-print(tree.findMinRec(tree.root, tree.root.value)) #4
+if __name__ == "__main__":
+    tree = BST()
+    valuesToAdd = [10, 5, 15, 4, 13, 18, 12, 14, 16, 19]
+    #insertRec
+    for i in valuesToAdd:
+        tree.insertRec(i)
+    #
+    """
+                        10
+                    /        \
+                    5           15
+                    /         /      \  
+                4         13        18
+                        /    \     /   \
+                        12     14   16    19
+    """
+    #deleteRec
+    print(tree.root.right.value) #15
+    tree.deleteRec(15)
+    print(tree.root.right.value) #16
+    """
+                        10
+                    /        \
+                    5           16
+                    /         /     \  
+                4         13       18
+                        /    \       \
+                        12      14      19
+    """
+    #findMinRec
+    print(tree.findMinRec(tree.root, tree.root.value)) #4
 
-#findMaxRec
-print(tree.findMaxRec(tree.root, tree.root.value)) #19
+    #findMaxRec
+    print(tree.findMaxRec(tree.root, tree.root.value)) #19
 
-#findNextRec
-print(tree.findNextRec(tree.root, 12)) #13
+    #findNextRec
+    print(tree.findNextRec(tree.root, 12)) #13
 
-#findPrevRec
-print(tree.findPrevRec(tree.root, 12)) #10
+    #findPrevRec
+    print(tree.findPrevRec(tree.root, 12)) #10
 
 
-        
+            
 

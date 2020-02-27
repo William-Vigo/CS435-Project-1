@@ -46,11 +46,10 @@ class BST:
                 break
         return sortedList
 
-tree = BST()
-values = [10,5,20,6,12,7,11,16,19,18,17]
-for i in values:
-    tree.insertIter(i)
+if __name__ == "__main__":
+    tree = BST()
+    values = [10,5,20,6,12,7,11,16,19,18,17]
+    for i in values:
+        tree.insertIter(i)
 
-print(tree.sort(
-    
-))
+    print(tree.sort())

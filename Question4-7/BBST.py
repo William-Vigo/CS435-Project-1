@@ -288,17 +288,15 @@ class BBST:
         self.inorder(node.left)
         print(node.value)
         self.inorder(node.right)
+if __name__ == "__main__": 
+    tree = BBST()
+    values = [10,5,15,4,8,11,18,1,6,9,19,7]
+    for i in values:
+        tree.insertIter(i)
 
-tree = BBST()
-values = [10,5,15,4,8,11,18,1,6,9,19,7]
-for i in values:
-    tree.insertIter(i)
+    print(tree.inorder(tree.root))
+    tree.deleteIter(18)
+    tree.deleteIter(8)
+    tree.deleteIter(1)
 
-#print(tree.inorder(tree.root))
-tree.deleteIter(18)
-tree.deleteIter(8)
-tree.deleteIter(1)
-
-print()
-print(tree.inorder(tree.root))
-
+    print(tree.inorder(tree.root))

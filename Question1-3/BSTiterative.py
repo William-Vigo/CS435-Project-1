@@ -140,48 +140,48 @@ class BST:
             node = node.right
         return max
     
+if __name__ == "__main__":
+    tree = BST()
+    valuesToAdd = [10, 5, 15, 4, 13, 18, 12, 14, 16, 19]
+    #insertIter
+    for i in valuesToAdd:
+        tree.insertIter(i)
 
-tree = BST()
-valuesToAdd = [10, 5, 15, 4, 13, 18, 12, 14, 16, 19]
-#insertIter
-for i in valuesToAdd:
-    tree.insertIter(i)
+    """
+                        10
+                    /        \
+                    5           15
+                    /         /      \  
+                4         13        18
+                        /    \     /   \
+                        12     14   16    19
+    """
+    #deleteIter
+    print(tree.root.right.value) #15
+    tree.deleteIter(15)
+    print(tree.root.right.value) #16
+    """
+                        10
+                    /        \
+                    5           16
+                    /         /     \  
+                4         13       18
+                        /    \       \
+                        12      14      19
+    """
+    #findMinIter
+    print(tree.findMinIter(tree.root)) #4
 
-"""
-                       10
-                   /        \
-                 5           15
-                /         /      \  
-              4         13        18
-                      /    \     /   \
-                    12     14   16    19
-"""
-#deleteIter
-print(tree.root.right.value) #15
-tree.deleteIter(15)
-print(tree.root.right.value) #16
-"""
-                       10
-                   /        \
-                 5           16
-                /         /     \  
-              4         13       18
-                      /    \       \
-                    12      14      19
-"""
-#findMinIter
-print(tree.findMinIter(tree.root)) #4
+    #findMaxIter
+    print(tree.findMaxIter(tree.root)) #19
 
-#findMaxIter
-print(tree.findMaxIter(tree.root)) #19
+    #findNextIter
+    print(tree.findNextIter(tree.root, 12)) #13
 
-#findNextIter
-print(tree.findNextIter(tree.root, 12)) #13
+    #findPrevIter
+    print(tree.findPrevIter(tree.root, 12)) #10
 
-#findPrevIter
-print(tree.findPrevIter(tree.root, 12)) #10
+    tree.deleteIter(18)
+    tree.deleteIter(19)
 
-tree.deleteIter(18)
-tree.deleteIter(19)
-
-print(tree.findMaxIter(tree.root))
+    print(tree.findMaxIter(tree.root))
