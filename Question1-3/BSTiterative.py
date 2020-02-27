@@ -49,7 +49,7 @@ class BST:
                     root.value = root.right.value
                     root.right = None 
                 elif(root.right == None):
-                    root.value = root.left.values
+                    root.value = root.left.value
                     root.left = None
 
                 else:
@@ -64,9 +64,33 @@ class BST:
             while(root != None):
                 if(duplicate < root.value):
                     root = root.left
-                else:
-                    root.parent.right = None
-                    root = None
+                    continue
+                if(root.parent.left.value == duplicate):
+                    if(root.right):
+                        root.right.parent = root.parent
+                        root.parent.left = root.right
+                        root = None
+                    elif(root.left):
+                        root.left.parent = root.parent
+                        root.parent.left = root.left
+                        root = None
+                    else:
+                        root.parent.left = None
+                        root = None
+                      
+                elif(root.parent.right.value == duplicate):
+                    if(root.left):
+                        root.left.parent = root.parent
+                        root.parent.right = root.left
+                        root = None
+                    elif(root.right):
+                        root.right.parent = root.parent
+                        root.parent.right = root.right
+                        root = None
+                    else:
+                        root.parent.right = None
+                        root = None
+
                     
     def findNextIter(self, node: Node, value):
         while(node != None): 
@@ -159,4 +183,5 @@ print(tree.findPrevIter(tree.root, 12)) #10
 
 tree.deleteIter(18)
 tree.deleteIter(19)
+
 print(tree.findMaxIter(tree.root))
