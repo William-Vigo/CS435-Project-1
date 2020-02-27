@@ -65,7 +65,7 @@ class BST:
                 if(duplicate < root.value):
                     root = root.left
                 else:
-                    root.parent.left = None
+                    root.parent.right = None
                     root = None
                     
     def findNextIter(self, node: Node, value):
