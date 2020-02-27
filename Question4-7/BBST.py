@@ -146,26 +146,32 @@ class BST:
             else:
                 #node found is a leaf
                 if(root.left == None and root.right == None):
-                    root = None
+                    if(root.parent.left == root):
+                        root.parent.left = None
+                    else:
+                        root.parent.right = None
                 #node has 1 child
                 elif(root.left == None):
-                    root = root.right
+                    root.value = root.right.value
+                    root.right = None 
                 elif(root.right == None):
-                    root = root.left
+                    root.value = root.left.values
+                    root.left = None
 
                 else:
                     duplicateExist = True
                     min = self.findMinIter(root.right)
                     root.value = min
-                    root = root.right
                 break
 
         if(duplicateExist):
             duplicate = root.value
+            root = root.right
             while(root != None):
                 if(duplicate < root.value):
                     root = root.left
                 else:
+                    root.parent.left = None
                     root = None
                     
     def findNextIter(self, node: Node, value):
