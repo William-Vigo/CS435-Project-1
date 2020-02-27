@@ -7,9 +7,23 @@ class Node:
         self.value = value
 
 
-class BST:
+class BBST:
     def __init__(self):
         self.root = None
+    def adjustCurrentNodeWeights(self, node: Node):
+        if(not node.left and not node.right):
+            return 1
+        if(not node.left):
+            return node.right.height + 1
+        if(not node.right): 
+            return node.left.height + 1
+        
+        return max(node.left.height, node.right.height) + 1
+    def adjustWeights(self,node: Node):
+        curr = node
+        while(curr):
+            curr.height = self.adjustCurrentNodeWeights(curr)
+            curr = curr.parent 
 
     def getHeight(self, node: Node):
         if(node == None):
@@ -23,9 +37,10 @@ class BST:
         leftNode = node.left
         
         if(parent):
-            if(parent.left):
+            if(node.value < parent.value):
                 parent.left = leftNode
                 leftNode.parent = parent
+                
             else:
                 parent.right = leftNode
                 leftNode.parent = parent
@@ -49,9 +64,10 @@ class BST:
         rightNode = node.right
         
         if(parent):
-            if(parent.right):
+            if(node.value > parent.value):
                 parent.right = rightNode
                 rightNode.parent = parent
+                
             else:
                 parent.left = rightNode
                 rightNode.parent = parent
@@ -78,30 +94,32 @@ class BST:
         curr = node
         while(curr):
             BF = self.getBalanceFactor(curr)
+            leftBF = self.getBalanceFactor(curr.left)
+            rightBF = self.getBalanceFactor(curr.right)
 
             curr.height = 1 + max(self.getHeight(curr.left), self.getHeight(curr.right))
 
             if(abs(BF) <= 1):
                 curr = curr.parent
                 continue
-            #left rotation
-            if(BF > 0 and node.value < curr.left.value):
+            #right rotation
+            if(BF > 0 and leftBF >= 0):
                 self.rightRotate(curr)
                 continue
                 
-            #right rotation
-            elif(BF < 0 and node.value > curr.right.value):
+            #left rotation
+            elif(BF < 0 and rightBF <= 0):
                 self.leftRotate(curr)
                 continue
 
             #left right rotation
-            elif(BF > 0 and node.value > curr.left.value):
+            elif(BF > 0 and leftBF < 0):
                 self.leftRotate(curr.left)
                 self.rightRotate(curr)
 
             #right left rotation
             
-            elif(BF < 0 and node.value < curr.right.value):
+            elif(BF < 0 and rightBF > 0):
                 self.rightRotate(curr.right)
                 self.leftRotate(curr)
                 continue
@@ -146,18 +164,25 @@ class BST:
             else:
                 #node found is a leaf
                 if(root.left == None and root.right == None):
+                    if(not root.parent):
+                        self.root = None
+                        return
                     if(root.parent.left == root):
                         root.parent.left = None
                     else:
                         root.parent.right = None
+                    self.adjustWeights(root.parent)
+                    self.balance(root.parent)
                 #node has 1 child
                 elif(root.left == None):
                     root.value = root.right.value
                     root.right = None 
+                    self.balance(root)
                 elif(root.right == None):
-                    root.value = root.left.values
+                    root.value = root.left.value
                     root.left = None
-
+                    self.adjustWeights(root)
+                    self.balance(root)
                 else:
                     duplicateExist = True
                     min = self.findMinIter(root.right)
@@ -170,10 +195,45 @@ class BST:
             while(root != None):
                 if(duplicate < root.value):
                     root = root.left
-                else:
-                    root.parent.left = None
-                    root = None
-                    
+                    continue
+                if(root.parent.left.value == duplicate):
+                    if(root.right):
+                        root.right.parent = root.parent
+                        root.parent.left = root.right
+                        self.adjustWeights(root.parent)
+                        self.balance(root.parent)
+                        root = None
+                    elif(root.left):
+                        root.left.parent = root.parent
+                        root.parent.left = root.left
+                        self.adjustWeights(root.parent)
+                        self.balance(root.parent)
+                        root = None
+                    else:
+                        root.parent.left = None
+                        self.adjustWeights(root.parent)
+                        self.balance(root.parent)
+                        root = None
+                      
+                elif(root.parent.right.value == duplicate):
+                    if(root.left):
+                        root.left.parent = root.parent
+                        root.parent.right = root.left
+                        self.adjustWeights(root.parent)
+                        self.balance(root.parent)
+                        root = None
+                    elif(root.right):
+                        root.right.parent = root.parent
+                        root.parent.right = root.right
+                        self.adjustWeights(root.parent)
+                        self.balance(root.parent)
+                        root = None
+                    else:
+                        root.parent.right = None
+                        self.adjustWeights(root.parent)
+                        self.balance(root.parent)
+                        root = None
+
     def findNextIter(self, node: Node, value):
         while(node != None): 
             if(value < node.value):
@@ -229,10 +289,16 @@ class BST:
         print(node.value)
         self.inorder(node.right)
 
-tree = BST()
-values = [6,4,3,1,0,-1,1.5,1.25]
+tree = BBST()
+values = [10,5,15,4,8,11,18,1,6,9,19,7]
 for i in values:
     tree.insertIter(i)
 
-tree.inorder(tree.root)
-print("root: " + str(tree.root.value))
+#print(tree.inorder(tree.root))
+tree.deleteIter(18)
+tree.deleteIter(8)
+tree.deleteIter(1)
+
+print()
+print(tree.inorder(tree.root))
+
