@@ -16,7 +16,7 @@ def getSortedArray(n):
 
 if __name__ == "__main__":
     #Problem 3a
-    print(getRandomArray(10))
+    print(getRandomArray(10000))
 
     #Problem 3b
     print(getSortedArray(10))
