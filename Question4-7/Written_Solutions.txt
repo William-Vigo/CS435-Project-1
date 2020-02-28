@@ -21,3 +21,11 @@ Question 5b (written section)
     long time insert an item. We are also using extra implicit space which isn't good if we
     use this in industry with huge amount of nodes.
 
+Question 6b
+BST traversal: 170770
+AVL traversal: 121614
+
+Question 6c
+BST traversal: 49995000
+AVL traversal: 123617
+
