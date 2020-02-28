@@ -128,7 +128,9 @@ class BBST:
     def insertIter(self,value):
         root = self.root
         current = None
-        while(root != None): 
+        count = 0
+        while(root != None):
+            count += 1 
             current = root             
             if(value < root.value):
                 root.height += 1
@@ -152,16 +154,19 @@ class BBST:
             rightChild.parent = current
             current = current.right
         self.balance(current)
-
+        return count
     def deleteIter(self,value):
+        count = 0
         root = self.root
         duplicateExist = False
-        while(root != None): 
+        while(root != None):
+            count += 1 
             if(value < root.value):
                 root = root.left
             elif(value > root.value):
                 root = root.right 
             else:
+                count -= 1
                 #node found is a leaf
                 if(root.left == None and root.right == None):
                     if(not root.parent):
@@ -293,7 +298,7 @@ if __name__ == "__main__":
     tree = BBST()
     values = [10,5,15,4,8,11,18,1,6,9,19,7]
     for i in values:
-        tree.insertIter(i)
+        print(tree.insertIter(i))
 
     print(tree.inorder(tree.root))
     tree.deleteIter(18)

@@ -32,14 +32,17 @@ class BST:
             rightChild.parent = current
         return count
     def deleteIter(self,value):
+        count = 0
         root = self.root
         duplicateExist = False
         while(root != None): 
+            count += 1
             if(value < root.value):
                 root = root.left
             elif(value > root.value):
                 root = root.right 
             else:
+                count -= 1
                 #node found is a leaf
                 if(root.left == None and root.right == None):
                     if(root.parent.left == root):
@@ -92,8 +95,8 @@ class BST:
                     else:
                         root.parent.right = None
                         root = None
-
-                    
+        return count
+            
     def findNextIter(self, node: Node, value):
         while(node != None): 
             if(value < node.value):
@@ -148,3 +151,4 @@ if __name__ == "__main__":
     print(tree.insertIter(2))
     print(tree.insertIter(0))
     print(tree.insertIter(3))
+    print(tree.deleteIter(3))
