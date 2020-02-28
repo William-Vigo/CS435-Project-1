@@ -142,7 +142,6 @@ class BBST:
                 
         if(current == None):
             self.root = Node(value)
-            return
         elif(value < current.value):
             leftChild = Node(value)
             current.left = leftChild
@@ -238,6 +237,7 @@ class BBST:
                         self.adjustWeights(root.parent)
                         self.balance(root.parent)
                         root = None
+        return count
 
     def findNextIter(self, node: Node, value):
         while(node != None): 
@@ -292,11 +292,9 @@ if __name__ == "__main__":
     tree = BBST()
     values = [10,5,15,4,8,11,18,1,6,9,19,7]
     for i in values:
-        tree.insertIter(i)
+        print(tree.insertIter(i))
 
-    print(tree.inorder(tree.root))
     tree.deleteIter(18)
     tree.deleteIter(8)
     tree.deleteIter(1)
 
-    print(tree.inorder(tree.root))
