@@ -287,18 +287,12 @@ class BBST:
             node = node.right
         return max
     
-    def inorder(self, node: Node):
-        if(node == None):
-            return
-        self.inorder(node.left)
-        print(node.value)
-        self.inorder(node.right)
         
 if __name__ == "__main__": 
     tree = BBST()
     values = [10,5,15,4,8,11,18,1,6,9,19,7]
     for i in values:
-        print(tree.insertIter(i))
+        tree.insertIter(i)
 
     print(tree.inorder(tree.root))
     tree.deleteIter(18)
